@@ -7,6 +7,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from posts.models import Group, Post, User
 from .permissions import IsAuthorOrReadOnly
+from rest_framework.pagination import LimitOffsetPagination
 from .serializers import (
     CommentSerializer, GroupSerializer, PostSerializer, FollowSerializer
 )
@@ -29,7 +30,7 @@ class PostViewSet(viewsets.ModelViewSet):
     )
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['group']
-
+    pagination_class = LimitOffsetPagination
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
 
