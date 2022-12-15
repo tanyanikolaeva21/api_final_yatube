@@ -7,8 +7,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from posts.models import Group, Post, User
 from .permissions import IsAuthorOrReadOnly
-from .serializers import (CommentSerializer, GroupSerializer, PostSerializer,
-                            FollowSerializer)
+from .serializers import *
 
 
 class GroupViewSet(viewsets.ReadOnlyModelViewSet):
