@@ -1,4 +1,6 @@
 import os
+from datetime import timedelta
+
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -18,6 +20,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'api',
     'posts',
+    'djoser',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -90,4 +94,15 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
     ],
+
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+}
+
+DEFAULT_AUTO_FIELD='django.db.models.AutoField'
+
+SIMPLE_JWT = {
+   'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
+   'AUTH_HEADER_TYPES': ('Bearer',),
 }
