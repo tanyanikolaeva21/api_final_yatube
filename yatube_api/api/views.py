@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from posts.models import Group, Post, User
 from .permissions import IsAuthorOrReadOnly
 from .serializers import (CommentSerializer, GroupSerializer, PostSerializer,
-FollowSerializer)
+                            FollowSerializer)
 
 
 class GroupViewSet(viewsets.ReadOnlyModelViewSet):
@@ -19,10 +19,13 @@ class GroupViewSet(viewsets.ReadOnlyModelViewSet):
     def create(self, request):
         return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
+
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsAuthorOrReadOnly)
+    permission_classes = (
+        permissions.IsAuthenticatedOrReadOnly, IsAuthorOrReadOnly
+    )
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['group']
 
@@ -32,18 +35,20 @@ class PostViewSet(viewsets.ModelViewSet):
 
 class CommentViewSet(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly, IsAuthorOrReadOnly)
+    permission_classes = (
+        permissions.IsAuthenticatedOrReadOnly, IsAuthorOrReadOnly
+    )
 
     def get_queryset(self):
         return get_object_or_404(
             Post, pk=self.kwargs.get('post_id')
-            ).comments.all()
+        ).comments.all()
 
     def perform_create(self, serializer):
         serializer.save(
             author=self.request.user,
             post=get_object_or_404(Post, pk=self.kwargs.get('post_id'))
-            )
+        )
 
 
 class FollowViewSet(viewsets.ModelViewSet):

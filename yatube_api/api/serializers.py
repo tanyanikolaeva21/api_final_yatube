@@ -29,6 +29,7 @@ class GroupSerializer(serializers.ModelSerializer):
         model = Group
         fields = '__all__'
 
+
 class FollowSerializer(serializers.ModelSerializer):
 
     user = serializers.SlugRelatedField(
