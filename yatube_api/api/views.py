@@ -42,8 +42,7 @@ class CommentViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         return get_object_or_404(
-            Post, pk=self.kwargs.get('post_id')
-                ).comments.all()
+            Post, pk=self.kwargs.get('post_id')).comments.all()
 
     def perform_create(self, serializer):
         serializer.save(
